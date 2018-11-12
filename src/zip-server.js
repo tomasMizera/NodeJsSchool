@@ -19,6 +19,5 @@ server.listen(9999, "localhost")
    	req.pipe(createGzip()).pipe(res);
   })
   .on( 'request', (req, res) => {
-  	console.log('requested file save');
   	req.pipe( destFile );
   });
