@@ -20,18 +20,23 @@ describe("Stringify feature", function() {
         let rdSt = new objPopStream.stream( { objectMode: true }, sample );
         let stringifyStream = toStrStream.objectToString();
 
-        rdSt.pipe(stringifyStream);
-        
-        stringifyStream.on('data', function(data) {
-            received.push(JSON.parse(data));
-        });
-
-        // reverse is mutable!
-        stringifyStream.on('end', function() {
-            assert.deepEqual( received.reverse(), expected );
-        });
+        rdSt.pipe(stringifyStream)
+            .on('data', function(data) {
+                received.push(JSON.parse(data));
+            })  // reverse is mutable!
+            .on('end', function() {
+                assert.deepEqual( received.reverse(), expected );
+            });
     });
 
-    it("Check for string output",
+    it("Check for string output", function() {
+
+        let sample = generate.objects( 5 );
+        let rdSt = new objPopStream.stream( {objectMode: true}, sample );
+
+        let stringifyStream = toStrStream.objectToString();
+        
+
+    }
         
 });

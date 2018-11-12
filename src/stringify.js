@@ -2,21 +2,27 @@
 
 const { Transform } = require('stream');
 
-const objectToString = function() {
-    return new Transform({
-        writableObjectMode: true,
-        transform(chunk, encoding, callback) {
-            try {
-                chunk = JSON.stringify(chunk);
-            } catch (e) {
-                return callback(e);
-            }
-            this.push(chunk);
-            callback();
-        },
-    });
-};
+class objectsToString extends Transform {
+
+    _transform( chunk, err, done ) {
+        try {
+            chunk = JSON.stringify( chunk );
+        } catch ( e ) {
+            return callback( e );
+        }
+        this.push( chunk );
+        done();
+    }
+
+    constructor( options ) {
+        super( options );
+    }
+}
+
+
 
 module.exports = {
-    objectToString: objectToString,
+    objectToString: () => {
+        return new objectsToString( {objectMode: true} );
+    },
 };

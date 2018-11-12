@@ -38,15 +38,13 @@ describe("Object testing - functional features", function() {
 
         let filterStream = filters.filter((x) => x > 5 );
 
-        rdSt.pipe(filterStream);
-
-        filterStream.on('data', function(data) {
-            resulted.push(data);
-        });
-
-        filterStream.on('end', function() {
-            assert.deepEqual(resulted, expected);
-        });
+        rdSt.pipe(filterStream)
+            .on('data', function(data) {
+                resulted.push(data);
+            })
+            .on('end', function() {
+                assert.deepEqual(resulted, expected);
+            });
     });
 
     it ("Stream filter feature with duplicates detection returns higher than 2", function() {
@@ -56,15 +54,13 @@ describe("Object testing - functional features", function() {
 
         let duplFiltrStream = filters.filterDuplicates( (x) => x > 2 );
 
-        rdSt.pipe(duplFiltrStream);
-
-        duplFiltrStream.on( 'data', function( data ) {
-            resulted.push( data );
-        });
-
-        duplFiltrStream.on( 'end', function() {
-            assert.deepEqual(resulted, expected);
-        });
+        rdSt.pipe(duplFiltrStream)
+            .on( 'data', function( data ) {
+                resulted.push( data );
+            })
+            .on( 'end', function() {
+                assert.deepEqual(resulted, expected);
+            });
     });
 
     it ("2 duplicates filtering streams working", function() {
@@ -78,24 +74,21 @@ describe("Object testing - functional features", function() {
         let duplFiltrStream1 = filters.filterDuplicates( (x) => x > 2 );
         let duplFiltrStream2 = filters.filterDuplicates( (x) => x > 2 );
 
-        rdSt1.pipe(duplFiltrStream1);
-        rdSt2.pipe(duplFiltrStream2);
+        rdSt1.pipe(duplFiltrStream1)
+            .on( 'data', function( data ) {
+                resulted.push( data );
+            })
+            .on( 'end', function() {
+                assert.deepEqual(resulted, expected);
+            });
 
-        duplFiltrStream1.on( 'data', function( data ) {
-            resulted.push( data );
-        });
-
-        duplFiltrStream1.on( 'end', function() {
-            assert.deepEqual(resulted, expected);
-        });
-
-        duplFiltrStream2.on( 'data', function(data) {
-            resulted2.push( data );
-        });
-
-        duplFiltrStream2.on( 'end', function() {
-            assert.deepEqual(resulted, expected);
-        })
+        rdSt2.pipe(duplFiltrStream2)
+            .on( 'data', function(data) {
+                resulted2.push( data );
+            })
+            .on( 'end', function() {
+                assert.deepEqual(resulted, expected);
+            });
     });
 });
 
