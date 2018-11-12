@@ -2,41 +2,36 @@ const { Readable } = require('stream');
 
 const readable = require('../src/fromGenerator.js');
 const toStrStream = require('../src/stringify.js');
-const generator = require('../src/generator.js');
+const generate = require('../src/generator.js');
+const objPopStream = require('../src/readableObjArray.js');
 const assert = require('assert');
 
 
-describe("stringify", function() {
-    it("should convert object to string", function() {
-        let collection = objGen.gen();
-        let collectionCopy = JSON.parse(JSON.stringify(collection));
-        let readStream = new objGen.MyReadable({ objectMode: true }, collection);
-        let stringifyStream = new object.objectToString();
+describe("Stringify feature", function() {
 
-        readStream.pipe(stringifyStream);
-        let arr = [];
+    let received = [];
+
+    it("Converts arr of objects to string", function() {
+        
+        let sample = generate.objects( 5 );
+        let expected = JSON.parse(JSON.stringify(sample));
+        receiver = [];
+
+        let rdSt = new objPopStream.stream( { objectMode: true }, sample );
+        let stringifyStream = toStrStream.objectToString();
+
+        rdSt.pipe(stringifyStream);
+        
         stringifyStream.on('data', function(data) {
-            arr.push(JSON.parse(data));
+            received.push(JSON.parse(data));
         });
+
+        // reverse is mutable!
         stringifyStream.on('end', function() {
-            assert.deepEqual(collectionCopy, arr.reverse());
+            assert.deepEqual( received.reverse(), expected );
         });
     });
 
-    xit("should return string", function() {
-        let collection = objGen.gen();
-        let readStream = new objGen.MyReadable({ objectMode: true }, collection);
-        let stringifyStream = new object.objectToString();
-
-        readStream.pipe(stringifyStream);
-        let arr = [];
-        stringifyStream.on('data', function(data) {
-            arr.push(data);
-        });
-        stringifyStream.on('end', function() {
-           arr.forEach(function(e) {
-              assert(typeof e === "string");
-           });
-        });
-    });
+    it("Check for string output",
+        
 });
