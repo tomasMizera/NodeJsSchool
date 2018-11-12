@@ -1,8 +1,10 @@
-const re = require('../src/fromGenerator.js');
-const object = require('../src/stringify.js');
-const objGen = require('../src/objectGenerator.js');
-const assert = require('assert');
 const { Readable } = require('stream');
+
+const readable = require('../src/fromGenerator.js');
+const toStrStream = require('../src/stringify.js');
+const generator = require('../src/generator.js');
+const assert = require('assert');
+
 
 describe("stringify", function() {
     it("should convert object to string", function() {

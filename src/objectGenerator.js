@@ -3,17 +3,17 @@
 
 const {Readable} = require("stream");
 
-function gen() {
-    let objects = [];
-    let c = 3;
-    do {
-        objects.push({
-            r: 1,
-            a: c++
-        });
-    } while(c<10)
-    return objects;
-}
+// function gen() {
+//     let objects = [];
+//     let c = 3;
+//     do {
+//         objects.push({
+//             r: 1,
+//             a: c++
+//         });
+//     } while(c<10)
+//     return objects;
+// }
 
 
 class MyReadable extends Readable {

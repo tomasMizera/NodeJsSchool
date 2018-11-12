@@ -9,6 +9,23 @@ function* generator( bound , ...other) {
 	}
 }
 
+function objectsGenerator( bound ) {
+    let objects = [];
+    let c = 56;
+
+    for( let i = 0; i < bound; ++i ) {
+    	objects.push({
+            r: 1,
+            g: c++,
+            b: 20,
+            a: 55
+        });
+    }
+
+    return objects;
+}
+
 module.exports = {
 	values: generator,
+	objects: objectsGenerator,
 };
