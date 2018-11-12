@@ -35,7 +35,7 @@ describe("Stringify feature", function() {
         let rdSt = new objPopStream.stream( {objectMode: true}, sample );
 
         let stringifyStream = toStrStream.objectToString();
-        
+
 
     }
         

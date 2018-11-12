@@ -11,24 +11,20 @@ class fromGenerator extends Readable {
         let b, data;
         do {
             data = this.resource.next();
-            if (!data.done) {
+            if ( !data.done ) {
                 let dataChunk = data.value;
-                b = this.push(dataChunk);
+                b = this.push( dataChunk );
             } else {
 
-                this.push(null);
+                this.push( null );
                 return;
             }
         }
-        while (b);
+        while ( b );
     }
     constructor(options, generator) {
-        super(options);
-        if (generator)
-            this.resource = generator;
-        else {
-            console.log("Undefined generator");
-        }
+        super( options );
+        this.resource = generator;
     }
 }
 
