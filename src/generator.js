@@ -25,7 +25,3 @@ function objectsGenerator( bound ) {
     return objects;
 }
 
-module.exports = {
-	values: generator,
-	objects: objectsGenerator,
-};
