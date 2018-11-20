@@ -6,7 +6,7 @@ function* generator(limit) {
     }
 }
 
-class fromGenerator extends Readable {
+class FromGenerator extends Readable {
     _read() {
         let b, data;
         do {
@@ -30,6 +30,6 @@ class fromGenerator extends Readable {
 
 
 module.exports = {
-    fromGenerator: fromGenerator,
+    fromGenerator: FromGenerator,
     generator: generator,
 };

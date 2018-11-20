@@ -49,11 +49,11 @@ class filterDuplicates extends Transform {
 module.exports = {
 
   // map with Transform stream
-  map: function(fn) {
+  map: function( fn ) {
     return new Transform ({
         objectMode: true,
-        transform(ch, e, cb){
-          this.push(fn(ch));
+        transform( ch, e, cb ) {
+          this.push( fn( ch ) );
           cb();
         }
     });

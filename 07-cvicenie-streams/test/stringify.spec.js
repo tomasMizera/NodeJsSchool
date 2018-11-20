@@ -36,6 +36,5 @@ describe("Stringify feature", function() {
 
         let stringifyStream = toStrStream.objectToString();
 
-
     }); 
 });
