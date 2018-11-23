@@ -2,7 +2,7 @@
 // gets only third argument
 // const [, , URL] = process.argv;
 let URL = 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&'
-const { parallelLimit } = require("async");
+const async = require("async");
 const request = require("request").defaults({ json: true });
 
 
@@ -31,8 +31,8 @@ let tasks = pageNumbers.map( (pageNumber) => {
 	};
 });
 
-parallelLimit( tasks, 4, function(err) {
+async.parallelLimit( tasks, 4, function(err) {
 		if ( err ) throw err;
-		console.log( JSON.stringify( results, null, 2 ));
+		console.log("Result: ", JSON.stringify( results, null, 2 ));
 	});
 
