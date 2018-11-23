@@ -1,37 +1,38 @@
 
-
 // gets only third argument
-const [, , URL] = process.argv;
-
+// const [, , URL] = process.argv;
+let URL = 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&'
 const { parallelLimit } = require("async");
-const request = require("request")
-			.defaults({ json: true });
+const request = require("request").defaults({ json: true });
 
 
 let pageIndex = 0;
 const results = [];
+let pageNumbers = [...Array(10).keys()];
+let tasks = pageNumbers.map( (pageNumber) => {
+	// each number will result in new function
+	return (callback) => {
+		console.log("tu som");
+		request(`${URL}&pageIndex=${pageNumber}`,
+			(err, { statusCode }, result) => {
+				if (err || statusCode !== 200)
+					callback(err || new Error(statusCode));
 
-parallelLimit(
-	(callback) => {
-		callback(err);
-	},
 
-	// limit of tasks at the time
-	4, 
+// FUNCTIONS ARE ATOMIC!!!!!!!!!
+// TAKZE NO PROBLEMO....skoro
 
-	// callback
-	function(err) {
+
+				results.push(...result.rules);
+				// pageIndex++;
+				console.log(results);
+				callback(null, result);
+			});
+	};
+});
+
+parallelLimit( tasks, 4, function(err) {
 		if ( err ) throw err;
 		console.log( JSON.stringify( results, null, 2 ));
 	});
 
-// fs.writeFile(file, data[, options], callback)
-// replacing the file if it already exists. 
-// data can be a string or a buffer.
-// It is unsafe to use fs.writeFile() multiple times 
-// 	on the same file, without waiting for the callback
-
-fs.writeFile(outPath, outData, (err) => {
-    if (err) throw err;
-    console.error('written:', outPath);
-});
