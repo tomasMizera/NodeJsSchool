@@ -11,6 +11,6 @@
  				// else fe_cb( null, path );
  				fe_cb( err, path );
  			});
- 	}});
+ 		}});
  	async.tryEach(tasks,cb);
  }
