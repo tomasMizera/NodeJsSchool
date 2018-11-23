@@ -42,7 +42,7 @@ describe("writeTempFile", function() {
         done();
       });
   });
-  it.skip("[BONUS]: writeTempFile has 'same signature' as writeFile", function() {
+  it("[BONUS]: writeTempFile has 'same signature' as writeFile", function() {
     assert.equal(writeTempFile.length, fs.writeFile.length);
   });
 });
