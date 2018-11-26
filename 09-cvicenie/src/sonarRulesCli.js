@@ -31,16 +31,18 @@ doWhilst(
 
         results.push(...result.rules);
         pageIndex++;
+        console.log(result);
         done(null, result);
       }
     );
   },
   function _while({ p, ps, total }) {
     // has more records, index * pageSize
+    console.log("p: ", p, "\nps: ", ps, "\ntotal: ", total);
     return p * ps < total;
   },
   function _done(err) {
     if (err) throw err;
-    console.log(JSON.stringify(results, null, 2));
+    // console.log(JSON.stringify(results, null, 2));
   }
 );

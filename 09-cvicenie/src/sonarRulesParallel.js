@@ -8,30 +8,26 @@ const request = require("request").defaults({ json: true });
 
 let pageIndex = 0;
 const results = [];
-let pageNumbers = [...Array(10).keys()];
+let pageNumbers = [1, 2, 3,4, 5,6,7,8,9,10];
 let tasks = pageNumbers.map( (pageNumber) => {
 	// each number will result in new function
 	return (callback) => {
-		console.log("tu som");
 		request(`${URL}&pageIndex=${pageNumber}`,
 			(err, { statusCode }, result) => {
 				if (err || statusCode !== 200)
 					callback(err || new Error(statusCode));
 
-
-// FUNCTIONS ARE ATOMIC!!!!!!!!!
-// TAKZE NO PROBLEMO....skoro
-
+				if (rasu)	
 
 				results.push(...result.rules);
 				// pageIndex++;
 				console.log(results);
-				callback(null, result);
+				callback(null, results);
 			});
 	};
 });
 
-async.parallelLimit( tasks, 4, function(err) {
+async.parallelLimit( tasks, 4, function(err, results) {
 		if ( err ) throw err;
 		console.log("Result: ", JSON.stringify( results, null, 2 ));
 	});

@@ -1,48 +1,50 @@
-module.export = findingFiles;
-
 const fs = require( 'fs' );
 const async = require( 'async' );
 
+module.exports = {
+	findFirstFile,
+	findAllFiles
+};
 
-function findingFiles(dirs, filename, str, cb) {
-	
-	let tasks = dirs.map(( dir ) => {
-		return ( callback ) => {
+function getTasks(dirs, filename, str) {
+	let tasks = dirs.map((dir) => {
+		return (callback) => {
 
-			fs.readdir( dir, 'utf8', ( err, files ) => {
-				if (err) callback(err);
-				if ( files.indexOf( filename ) > -1 ) {
+			fs.readdir(dir, 'utf8', ( err, files) => {
+				if (err ) callback (err, null);
 
+				if (files.indexOf(filename) > -1) {
 					let filePath = dir + '/' + files[files.indexOf(filename)];
-					
 					fs.readFile(filePath, function (err, data) {
-						if (err) callback(err);
-						if(data.indexOf('catchMeIfYouCan') >= 0){
-							// console.log(filePath);
+						if (err) callback (err, null);
+						if (data.indexOf(str) > -1) {
 							callback(null, filePath);
 						}
-					});
+						else callback(null);
+					})	
 				}
-			})};
-		});
+				else callback(null);
+			});
+		};
+	});
+	return tasks;
+}
 
-	async.race(tasks, (err, result) => {
-		// console.log("received: ", err, " - ", result);
-		if ( err ) {
-			console.log("Fuck!");
-			cb( null );
-		}
-		cb( result );
+function findFirstFile(dirs, filename, str, cb) {
+
+	findAllFiles(dirs, filename, str, (err, result) => {
+		if (result.length > 0) 
+			cb(err, result[0]);
+		else
+			cb(err, result);
 	});
 }
 
-
-paths = ["/home/tomasmizera", 
-"/tmp", 
-"/home/tomasmizera/school/zs_1819/wawjs/repo/node_tasks/07-cvicenie-streams", 
-"/home/tomasmizera/school/zs_1819/wawjs/repo/node_tasks/09-cvicenie",
-"/home/tomasmizera/school/zs_1819/wawjs/repo/node_tasks"];
-
-findingFiles(paths, "findMe.txt", "catchMeIfYouCan", (result) => {
-	if( result ) console.log("Successfull run, here: ", result);
-});
+function findAllFiles(dirs, filename, str, cb) {
+	async.parallel(getTasks(dirs, filename, str), (err, results) => {
+		
+		// vyfiltrujem vsetky null hodnoty v poli
+		results = (results.filter(element => element));
+		cb(err, results)
+	});
+}
