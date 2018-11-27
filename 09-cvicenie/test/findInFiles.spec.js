@@ -35,10 +35,12 @@ describe('Find specific file in directories', function() {
 	});
 
 	it('Should return all entries containing the right files', function(done) {
-		fileSearch.findAllFiles(paths, "findMe.txt", "catchMeIfYouCan", (err, result) => {
+		fileSearch.findAllFiles(paths, "findMe.txt", "catchMeIfYouCan", (err, results) => {
 			if(err) return done(err);
-			if(result) {
-				assert([true, true]);
+			if(results) {
+				results.forEach((result) => {
+					assert(possible_outcomes.indexOf(result) > -1);
+				});
 				done();
 			}
 		});	

@@ -12,8 +12,8 @@ node sonar/_sonar_rules/cli.js \
     | jsontool -a name
 */
 
-const [, , URL] = process.argv;
-
+// const [, , URL] = process.argv;
+let URL = 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&'
 const { doWhilst } = require("async");
 const request = require("request")
   .defaults({ json: true });
@@ -38,11 +38,10 @@ doWhilst(
   },
   function _while({ p, ps, total }) {
     // has more records, index * pageSize
-    console.log("p: ", p, "\nps: ", ps, "\ntotal: ", total);
     return p * ps < total;
   },
   function _done(err) {
     if (err) throw err;
-    // console.log(JSON.stringify(results, null, 2));
+    console.log(JSON.stringify(results, null, 2));
   }
 );

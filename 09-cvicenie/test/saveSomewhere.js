@@ -35,6 +35,4 @@ describe("saveSomewhere", function() {
       done();
     })
   });
-
-
 });

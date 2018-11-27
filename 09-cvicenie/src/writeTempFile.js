@@ -6,7 +6,7 @@ const path = require("path");
 const async = require( 'async' );
 
 
-function writeTempFile(fileName, data, opts, cb ) {
+function writeTempFile(fileName, data, opts, cb) {
 	let tempDir = path.join(os.tmpdir(), `${process.pid}-`);
 	
 	async.waterfall([
@@ -16,7 +16,7 @@ function writeTempFile(fileName, data, opts, cb ) {
 		},
 		// Write file to temp directory
 		(path, callback) => {
-			let filePath = path + '/' + fileName;	
+			let filePath = path + '/' + fileName;
 			try{
 				fs.writeFile( filePath, data, opts, (err) => {
 					if (err) throw err;
